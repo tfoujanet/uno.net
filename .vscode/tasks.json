@@ -2,14 +2,31 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "build",
+            "label": "build",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "build",
+                "build"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
                 "${workspaceFolder}/Uno.Tests/Uno.Tests.csproj"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
     ]
 }
