@@ -21,7 +21,7 @@ namespace Uno
             get { return listeCartes; }
         }
 
-        public void InitialiserCartes()
+        private void InitialiserCartes()
         {
             foreach (Couleur couleur in Enum.GetValues(typeof(Couleur)))
             {
