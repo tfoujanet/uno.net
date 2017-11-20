@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
 using Uno;
-using Uno.Helpers;
+using Uno.Tests.Helpers;
 using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-
-namespace Uno.Tests
+namespace Uno.MsTests
 {
+    [TestClass]
     public class PiocheTest
     {
         private readonly Pioche pioche;
@@ -16,20 +17,20 @@ namespace Uno.Tests
             pioche = new Pioche();
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuDoitComporter108Cartes()
         {
             Assert.Equal(108, pioche.ListeCartes.Count);
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient4JokersEt4CartesPlus4()
         {
             Assert.Equal(4, pioche.CartesValeurs(Valeur.Joker).Count());
             Assert.Equal(4, pioche.CartesValeurs(Valeur.Plus4).Count());
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient8CartesPlus2()
         {
             var cartesPlus2 = pioche.CartesValeurs(Valeur.Plus2);
@@ -40,7 +41,7 @@ namespace Uno.Tests
             Assert.Equal(2, cartesPlus2.Count(_ => _.Couleur == Couleur.Jaune));
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient8CartesChangementSens()
         {
             var cartesChangementSens = pioche.CartesValeurs(Valeur.ChangementSens);
@@ -51,7 +52,7 @@ namespace Uno.Tests
             Assert.Equal(2, cartesChangementSens.Count(_ => _.Couleur == Couleur.Jaune));
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient8CartesPasseTour()
         {
             var cartesPasseTour = pioche.CartesValeurs(Valeur.PasseTour);
@@ -62,28 +63,28 @@ namespace Uno.Tests
             Assert.Equal(2, cartesPasseTour.Count(_ => _.Couleur == Couleur.Jaune));
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient19CartesNumeroteesRouge()
         {
             var cartesRouges = pioche.CartesCouleur(Couleur.Rouge);
             Assert.Equal(19, cartesRouges.CarteNumerotees().Count());
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient19CartesNumeroteesJaune()
         {
             var cartesJaunes = pioche.CartesCouleur(Couleur.Jaune);
             Assert.Equal(19, cartesJaunes.CarteNumerotees().Count());
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient19CartesNumeroteesBleues()
         {
             var cartesBleues = pioche.CartesCouleur(Couleur.Bleu);
             Assert.Equal(19, cartesBleues.CarteNumerotees().Count());
         }
 
-        [Fact]
+        [TestMethod]
         public void LeJeuContient19CartesNumeroteesVertes()
         {
             var cartesVertes = pioche.CartesCouleur(Couleur.Vert);

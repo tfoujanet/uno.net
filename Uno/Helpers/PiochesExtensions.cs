@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Uno.Tests.Helpers
+namespace Uno.Helpers
 {
     public static class PiochesExtensions
     {
