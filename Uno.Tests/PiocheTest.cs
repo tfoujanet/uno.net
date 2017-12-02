@@ -4,7 +4,6 @@ using Uno;
 using Uno.Helpers;
 using Xunit;
 
-
 namespace Uno.Tests
 {
     public class PiocheTest
