@@ -19,6 +19,12 @@ namespace Uno.MsTests
             tourMock = new Mock<ITour>();
 
             partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
+            partie.Joueurs.AddRange(new []
+            {
+                new Joueur("Joueur 1"),
+                new Joueur("Joueur 2")
+            });
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
         }
 
         [TestMethod]
@@ -31,7 +37,7 @@ namespace Uno.MsTests
                 listeCarte.Add(carte);
             };      
 
-            partie.JouerCarte(new Carte(Valeur.Quatre, Couleur.Rouge));
+            partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Quatre, Couleur.Rouge));
 
             CollectionAssert.Equals(1, listeCarte.Count);
         }
@@ -46,7 +52,7 @@ namespace Uno.MsTests
                 listeCarte.Add(carte);
             };      
 
-            partie.JouerCarte(new Carte(Valeur.Deux, Couleur.Vert));
+            partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Deux, Couleur.Vert));
 
             CollectionAssert.Equals(1, listeCarte.Count);
         }
@@ -61,7 +67,7 @@ namespace Uno.MsTests
                 listeCarte.Add(carte);
             };      
 
-            partie.JouerCarte(new Carte(Valeur.Joker, Couleur.Noir));
+            partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Joker, Couleur.Noir));
 
             CollectionAssert.Equals(1, listeCarte.Count);
         }
@@ -76,7 +82,7 @@ namespace Uno.MsTests
                 listeCarte.Add(carte);
             };      
 
-            partie.JouerCarte(new Carte(Valeur.Plus4, Couleur.Noir));
+            partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Plus4, Couleur.Noir));
 
             CollectionAssert.Equals(1, listeCarte.Count);
         }

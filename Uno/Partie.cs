@@ -50,8 +50,16 @@ namespace Uno
                 PartieCommencee(Joueurs);
         }
 
-        public void JouerCarte(Carte carte)
+        public void JouerCarte(Joueur joueur, Carte carte)
         {
+            var joueurTour = tour.JoueurDuTour;
+            if (joueurTour.Nom != joueur.Nom)
+                throw new MauvaisJoueurDeJouerException();
+
+            var joueurQuiJoue = Joueurs.First(_ => _.Nom == joueur.Nom);
+            if (joueurQuiJoue.Main.All(_ => _ != carte))
+                throw new JoueurNePossedePasLaCarteException();
+
             var derniereCarte = pile.DerniereCarte;
             if (!carte.EstSuperJoker() && !carte.EstJoker() && derniereCarte.Couleur != carte.Couleur && derniereCarte.Valeur != carte.Valeur)
                 throw new MauvaiseCarteJoueeException();
