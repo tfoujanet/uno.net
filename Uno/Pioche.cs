@@ -1,32 +1,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Uno.Helpers;
 
 namespace Uno
 {
-    public class Pioche
+
+    public class Pioche : IPioche
     {
         private const int NB_CARTES_JOKERS = 4;
         private const int NB_CARTE_COULEUR = 2;
 
         private List<Carte> listeCartes = new List<Carte>();
 
-        public Pioche()
-        {
-            InitialiserCartes();
-        }
-
         public List<Carte> ListeCartes
         {
             get { return listeCartes; }
         }
 
-        private void InitialiserCartes()
+        public void InitialiserCartes()
         {
             foreach (Couleur couleur in Enum.GetValues(typeof(Couleur)))
             {
                 AjouterCartes(couleur);
             }
+        }
+
+        public void MelangerCartes()
+        {
+            listeCartes = listeCartes.Randomize().ToList();
+        }
+
+        public Carte TirerCarte()
+        {
+            var carte = listeCartes.First();
+            listeCartes.Remove(carte);
+            return carte;
         }
 
         private void AjouterCartes(Couleur couleur)

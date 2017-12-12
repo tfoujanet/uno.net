@@ -13,6 +13,7 @@ namespace Uno.Tests
         public PiocheTest()
         {
             pioche = new Pioche();
+            pioche.InitialiserCartes();
         }
 
         [Fact]
@@ -87,6 +88,15 @@ namespace Uno.Tests
         {
             var cartesVertes = pioche.CartesCouleur(Couleur.Vert);
             Assert.Equal(19, cartesVertes.CarteNumerotees().Count());
+        }
+
+        [Fact]
+        public void QuandOnTireUneCarteElleDisparaitDeLaPioche()
+        {
+            var carte = pioche.TirerCarte();
+
+            Assert.DoesNotContain(carte, pioche.ListeCartes);
+            Assert.Equal(107, pioche.ListeCartes.Count);
         }
     }
 }
