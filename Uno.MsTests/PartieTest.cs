@@ -23,63 +23,14 @@ namespace Uno.MsTests
         }
 
         [TestMethod]
-        public void OnPeutJouerUneCarteDeMemeCouleur()
+        public void QuandUneCarteChangementDeSensEstJoueeLaPartieChangeSens()
         {
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
-            var listeCarte = new List<Carte>();
+            partie.Sens = Sens.Horaire;
 
-            partie.CarteJouee += (carte) => {
-                listeCarte.Add(carte);
-            };      
+            partie.JouerCarte(new Carte(Valeur.ChangementSens, Couleur.Rouge));
 
-            partie.JouerCarte(new Carte(Valeur.Quatre, Couleur.Rouge));
-
-            CollectionAssert.Equals(1, listeCarte.Count);
-        }
-
-        [TestMethod]
-        public void OnPeutJouerUneCarteDeMemeNumero()
-        {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
-            var listeCarte = new List<Carte>();
-
-            partie.CarteJouee += (carte) => {
-                listeCarte.Add(carte);
-            };      
-
-            partie.JouerCarte(new Carte(Valeur.Deux, Couleur.Vert));
-
-            CollectionAssert.Equals(1, listeCarte.Count);
-        }
-
-        [TestMethod]
-        public void OnPeutJouerUneCarteJokerSurNimporteQuelleCouleur()
-        {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
-            var listeCarte = new List<Carte>();
-
-            partie.CarteJouee += (carte) => {
-                listeCarte.Add(carte);
-            };      
-
-            partie.JouerCarte(new Carte(Valeur.Joker, Couleur.Noir));
-
-            CollectionAssert.Equals(1, listeCarte.Count);
-        }
-
-        [TestMethod]
-        public void OnPeutJouerUneCarteSuperJokerSurNimporteQuelleCouleur()
-        {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
-            var listeCarte = new List<Carte>();
-
-            partie.CarteJouee += (carte) => {
-                listeCarte.Add(carte);
-            };      
-
-            partie.JouerCarte(new Carte(Valeur.Plus4, Couleur.Noir));
-
-            CollectionAssert.Equals(1, listeCarte.Count);
+            Assert.AreEqual(Sens.Antihoraire, partie.Sens);
         }
     }
 }
