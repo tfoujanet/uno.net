@@ -28,7 +28,7 @@ namespace Uno
 
         public event Action<Carte> CarteJouee;
         public event Action<Joueur> JoueurAjoute;
-        public event Action PartieCommencee;
+        public event Action<IEnumerable<Joueur>> PartieCommencee;
 
         public void AjouterJoueur(Joueur joueur)
         {
@@ -47,7 +47,7 @@ namespace Uno
                 throw new PasAssezDeJoueurException();
 
             if (PartieCommencee != null)
-                PartieCommencee();
+                PartieCommencee(Joueurs);
         }
 
         public void JouerCarte(Carte carte)
@@ -60,7 +60,7 @@ namespace Uno
                 CarteJouee(carte);
         }
 
-        private void PartieEstCommencee()
+        private void PartieEstCommencee(IEnumerable<Joueur> joueurs)
         {
             pioche.MelangerCartes();
             DistribuerCartes();

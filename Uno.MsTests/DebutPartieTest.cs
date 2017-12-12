@@ -39,10 +39,10 @@ namespace Uno.MsTests
                 new Joueur("joueur 2")
             });
 
-            var listeEvenement = new List<object>();
-            partie.PartieCommencee += () =>
+            var listeEvenement = new List<IEnumerable<Joueur>>();
+            partie.PartieCommencee += (joueurs) =>
             {
-                listeEvenement.Add(new object());
+                listeEvenement.Add(joueurs);
             };
 
             partie.CommencerPartie();
