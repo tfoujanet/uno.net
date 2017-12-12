@@ -13,5 +13,10 @@ namespace Uno
         public string Nom { get; }
 
         public List<Carte> Main { get; }
+
+        public void TirerCarte(Carte carte)
+        {
+            Main.Add(carte);
+        }
     }
 }

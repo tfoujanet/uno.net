@@ -73,7 +73,7 @@ namespace Uno
                 for (var j=0; j< NB_CARTE_MAIN_INITIALE; j++)
                 {
                     var carte = pioche.TirerCarte();
-                    Joueurs[i].Main.Add(carte);
+                    Joueurs[i].TirerCarte(carte);
                 }
             }
         }
