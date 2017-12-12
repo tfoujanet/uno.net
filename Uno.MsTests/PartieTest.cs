@@ -1,23 +1,28 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
+using Uno;
+using Uno.Helpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Xunit;
+using System.Collections.Generic;
 
-namespace Uno.Tests
+namespace Uno.MsTests
 {
+    [TestClass]
     public class PartieTest
     {
         private Mock<IPile> pileMock;
-
-        private Partie partie;
+        private readonly Partie partie;
 
         public PartieTest()
         {
+
             pileMock = new Mock<IPile>();
 
             partie = new Partie(pileMock.Object);
         }
 
-        [Fact]
+        [TestMethod]
         public void OnPeutJouerUneCarteDeMemeCouleur()
         {
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
@@ -29,10 +34,10 @@ namespace Uno.Tests
 
             partie.JouerCarte(new Carte(Valeur.Quatre, Couleur.Rouge));
 
-            Assert.Single(listeCarte);
+            CollectionAssert.Equals(1, listeCarte.Count);
         }
 
-        [Fact]
+        [TestMethod]
         public void OnPeutJouerUneCarteDeMemeNumero()
         {
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
@@ -44,10 +49,10 @@ namespace Uno.Tests
 
             partie.JouerCarte(new Carte(Valeur.Deux, Couleur.Vert));
 
-            Assert.Single(listeCarte);
+            CollectionAssert.Equals(1, listeCarte.Count);
         }
 
-        [Fact]
+        [TestMethod]
         public void OnPeutJouerUneCarteJokerSurNimporteQuelleCouleur()
         {
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
@@ -59,10 +64,10 @@ namespace Uno.Tests
 
             partie.JouerCarte(new Carte(Valeur.Joker, Couleur.Noir));
 
-            Assert.Single(listeCarte);
+            CollectionAssert.Equals(1, listeCarte.Count);
         }
 
-        [Fact]
+        [TestMethod]
         public void OnPeutJouerUneCarteSuperJokerSurNimporteQuelleCouleur()
         {
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
@@ -74,7 +79,7 @@ namespace Uno.Tests
 
             partie.JouerCarte(new Carte(Valeur.Plus4, Couleur.Noir));
 
-            Assert.Single(listeCarte);
+            CollectionAssert.Equals(1, listeCarte.Count);
         }
     }
 }

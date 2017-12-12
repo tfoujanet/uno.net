@@ -1,4 +1,5 @@
 using Uno.Exceptions;
+using Uno.Extensions;
 
 namespace Uno
 {
@@ -6,11 +7,11 @@ namespace Uno
     
     public class Partie
     {
-        private readonly Pile pile;
+        private readonly IPile pile;
 
-        public Partie()
+        public Partie(IPile pile)
         {
-            pile = new Pile(this);
+            this.pile = pile;
         }
 
         public event CarteJoueeHandler CarteJouee;
@@ -18,7 +19,7 @@ namespace Uno
         public void JouerCarte(Carte carte)
         {
             var derniereCarte = pile.DerniereCarte;
-            if (derniereCarte.Couleur != carte.Couleur && derniereCarte.Valeur != carte.Valeur)
+            if (!carte.EstSuperJoker() && !carte.EstJoker() && derniereCarte.Couleur != carte.Couleur && derniereCarte.Valeur != carte.Valeur)
                 throw new MauvaiseCarteJoueeException();
 
             if (CarteJouee != null)

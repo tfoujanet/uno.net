@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Uno
 {
-    public class Pile
+    public class Pile : IPile
     {
         private List<Carte> pile = new List<Carte>();
 
@@ -16,7 +16,7 @@ namespace Uno
             get { return pile.Count > 0 ? pile[pile.Count - 1] : null; }
         }
 
-        public void CarteJouee(Carte carte)
+        private void CarteJouee(Carte carte)
         {
             pile.Add(carte);
         }
