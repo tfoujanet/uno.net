@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Uno.Exceptions;
 using Uno.Extensions;
 
@@ -14,12 +17,27 @@ namespace Uno
             this.pile = pile;
             this.CarteJouee += CarteEstJouee;
 
+            Joueurs = new List<Joueur>();
             Sens = Sens.Horaire;
         }
 
         public Sens Sens { get; set; }
 
+        public List<Joueur> Joueurs { get; }
+
         public event CarteJoueeHandler CarteJouee;
+        public event Action<Joueur> JoueurAjoute;
+
+        public void AjouterJoueur(Joueur joueur)
+        {
+            if (Joueurs.Any(_ => _.Nom == joueur.Nom))
+                throw new JoueurDejaAjouteException();
+
+            Joueurs.Add(joueur);
+
+            if (JoueurAjoute != null)
+                JoueurAjoute(joueur);
+        }
 
         public void JouerCarte(Carte carte)
         {

@@ -16,16 +16,5 @@ namespace Uno.Tests
 
             partie = new Partie(pileMock.Object);
         }
-
-        [Fact]
-        public void QuandUneCarteChangementDeSensEstJoueeLaPartieChangeSens()
-        {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
-            partie.Sens = Sens.Horaire;
-
-            partie.JouerCarte(new Carte(Valeur.ChangementSens, Couleur.Rouge));
-
-            Assert.Equal(Sens.Antihoraire, partie.Sens);
-        }
     }
 }
