@@ -6,9 +6,7 @@ using Uno.Extensions;
 
 namespace Uno
 {
-    public delegate void CarteJoueeHandler(Carte carte);
-    
-    public class Partie
+    public class Partie : IPartie
     {
         private const int NB_MIN_JOUEURS_PARTIE = 2;
         private readonly IPile pile;
@@ -27,7 +25,7 @@ namespace Uno
 
         public List<Joueur> Joueurs { get; }
 
-        public event CarteJoueeHandler CarteJouee;
+        public event Action<Carte> CarteJouee;
         public event Action<Joueur> JoueurAjoute;
         public event Action PartieCommencee;
 
