@@ -13,19 +13,17 @@ namespace Uno
         private const int NB_MIN_JOUEURS_PARTIE = 2;
         private readonly IPile pile;
         private readonly IPioche pioche;
+        private readonly ITour tour;
 
-        public Partie(IPile pile, IPioche pioche)
+        public Partie(IPile pile, IPioche pioche, ITour tour)
         {
             this.pile = pile;
             this.pioche = pioche;
-            this.CarteJouee += CarteEstJouee;
+            this.tour = tour;
             this.PartieCommencee += PartieEstCommencee;
 
             Joueurs = new List<Joueur>();
-            Sens = Sens.Horaire;
         }
-
-        public Sens Sens { get; set; }
 
         public List<Joueur> Joueurs { get; }
 
@@ -63,21 +61,9 @@ namespace Uno
                 CarteJouee(carte);
         }
 
-        private void CarteEstJouee(Carte carte)
-        {
-            if (carte.Valeur == Valeur.ChangementSens)
-                InverserSens();
-        }
-
         private void PartieEstCommencee()
         {
-            pioche.InitialiserCartes();
-            
-        }
-
-        private void InverserSens()
-        {
-            Sens = Sens == Sens.Horaire ? Sens.Antihoraire : Sens.Horaire;
+            pioche.InitialiserCartes();                        
         }
     }
 }

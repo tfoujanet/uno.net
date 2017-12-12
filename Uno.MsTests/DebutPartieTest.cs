@@ -11,14 +11,17 @@ namespace Uno.MsTests
     {
         private Mock<IPile> pileMock;
         private Mock<IPioche> piocheMock;
-        private readonly Partie partie;
+        private Mock<ITour> tourMock;
+
+        private Partie partie;
 
         public DebutPartieTest()
         {
             pileMock = new Mock<IPile>();
             piocheMock = new Mock<IPioche>();
+            tourMock = new Mock<ITour>();
 
-            partie = new Partie(pileMock.Object, piocheMock.Object);
+            partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
         }
 
         [TestMethod]
