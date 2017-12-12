@@ -9,6 +9,7 @@ namespace Uno
     public class Partie : IPartie
     {
         private const int NB_MIN_JOUEURS_PARTIE = 2;
+        private const int NB_CARTE_MAIN_INITIALE = 7;
         private readonly IPile pile;
         private readonly IPioche pioche;
         private readonly ITour tour;
@@ -61,7 +62,20 @@ namespace Uno
 
         private void PartieEstCommencee()
         {
-            pioche.InitialiserCartes();                        
+            pioche.MelangerCartes();
+            DistribuerCartes();
+        }
+
+        private void DistribuerCartes()
+        {
+            for (var i=0; i<Joueurs.Count; i++)
+            {
+                for (var j=0; j< NB_CARTE_MAIN_INITIALE; j++)
+                {
+                    var carte = pioche.TirerCarte();
+                    Joueurs[i].Main.Add(carte);
+                }
+            }
         }
     }
 }

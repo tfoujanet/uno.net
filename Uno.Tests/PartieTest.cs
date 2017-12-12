@@ -20,5 +20,18 @@ namespace Uno.Tests
 
             partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
         }
+
+        [Fact]
+        public void QuandLaPartieCommenceLesJoueursOntSeptCartes()
+        {
+            partie.Joueurs.AddRange(new []
+            {
+                new Joueur("Joueur 1"),
+                new Joueur("Joueur 2")
+            });
+            partie.CommencerPartie();
+
+            Assert.All(partie.Joueurs, _ => Assert.Equal(7, _.Main.Count));
+        }
     }
 }

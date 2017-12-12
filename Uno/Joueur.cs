@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Uno
 {
     public class Joueur
@@ -5,8 +7,11 @@ namespace Uno
         public Joueur(string nom)
         {
             Nom = nom;
+            Main = new List<Carte>();
         }
 
         public string Nom { get; }
+
+        public List<Carte> Main { get; }
     }
 }
