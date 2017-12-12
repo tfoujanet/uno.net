@@ -13,6 +13,11 @@ namespace Uno
 
         private List<Carte> listeCartes = new List<Carte>();
 
+        public Pioche()
+        {
+            InitialiserCartes();
+        }
+
         public List<Carte> ListeCartes
         {
             get { return listeCartes; }

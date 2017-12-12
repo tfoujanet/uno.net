@@ -8,14 +8,16 @@ namespace Uno.Tests
     public class DebutPartieTest
     {
         private Mock<IPile> pileMock;
+        private Mock<IPioche> piocheMock;
 
         private Partie partie;
 
         public DebutPartieTest()
         {
             pileMock = new Mock<IPile>();
+            piocheMock = new Mock<IPioche>();
 
-            partie = new Partie(pileMock.Object);
+            partie = new Partie(pileMock.Object, piocheMock.Object);
         }
 
         [Fact]

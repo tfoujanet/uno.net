@@ -14,7 +14,6 @@ namespace Uno.MsTests
         public PiocheTest()
         {
             pioche = new Pioche();
-            pioche.InitialiserCartes();
         }
 
         [TestMethod]

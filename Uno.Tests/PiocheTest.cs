@@ -13,7 +13,6 @@ namespace Uno.Tests
         public PiocheTest()
         {
             pioche = new Pioche();
-            pioche.InitialiserCartes();
         }
 
         [Fact]

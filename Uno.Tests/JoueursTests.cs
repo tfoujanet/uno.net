@@ -8,13 +8,16 @@ namespace Uno.Tests
     public class JoueursTests
     {
         private Mock<IPile> pileMock;
-        private readonly Partie partie;
+        private Mock<IPioche> piocheMock;
 
-        public JoueursTests() 
-        {            
+        private Partie partie;
+
+        public JoueursTests()
+        {
             pileMock = new Mock<IPile>();
+            piocheMock = new Mock<IPioche>();
 
-            partie = new Partie(pileMock.Object);
+            partie = new Partie(pileMock.Object, piocheMock.Object);
         }
 
         [Fact]
