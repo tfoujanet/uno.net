@@ -10,6 +10,7 @@ namespace Uno
     
     public class Partie
     {
+        private const int NB_MIN_JOUEURS_PARTIE = 2;
         private readonly IPile pile;
 
         public Partie(IPile pile)
@@ -27,6 +28,7 @@ namespace Uno
 
         public event CarteJoueeHandler CarteJouee;
         public event Action<Joueur> JoueurAjoute;
+        public event Action PartieCommencee;
 
         public void AjouterJoueur(Joueur joueur)
         {
@@ -37,6 +39,15 @@ namespace Uno
 
             if (JoueurAjoute != null)
                 JoueurAjoute(joueur);
+        }
+
+        public void CommencerPartie()
+        {
+            if (Joueurs.Count < NB_MIN_JOUEURS_PARTIE)
+                throw new PasAssezDeJoueurException();
+
+            if (PartieCommencee != null)
+                PartieCommencee();
         }
 
         public void JouerCarte(Carte carte)
