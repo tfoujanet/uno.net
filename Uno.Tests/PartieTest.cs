@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Moq;
 using Uno.Exceptions;
@@ -80,9 +81,12 @@ namespace Uno.Tests
         public void UnJoueurPeutPiocherUneCarteLorsqueCestSonTour()
         {
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Bleu));
             piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
 
             partie.PiocherCarte(new Joueur("Joueur 1"));
+
+            Assert.Single(partie.Joueurs[0].Main);
         }
 
         [Fact]
@@ -105,6 +109,7 @@ namespace Uno.Tests
             });
 
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
 
             partie.PiocherCarte(new Joueur("Joueur 1"));
@@ -140,6 +145,26 @@ namespace Uno.Tests
             pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 1"));
 
             Assert.Throws<MauvaiseCouleurChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Noir));
+        }
+
+        [Fact]
+        public void LaCartePiocheeEstJoueeSiEllePeutLetre()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet( _=> _.DerniereCarte).Returns(new Carte(Valeur.Huit, Couleur.Bleu));
+            piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Rouge));
+
+            Tuple<string, Carte> carteJouee = null;
+            partie.CarteJouee += (joueur, carte) =>
+            {
+                carteJouee = new Tuple<string, Carte>(joueur.Nom, carte);
+            };
+
+            partie.PiocherCarte(new Joueur("Joueur 1"));
+
+            Assert.NotNull(carteJouee);
+            Assert.Equal("Joueur 1", carteJouee.Item1);
+            Assert.Equal(new Carte(Valeur.Huit, Couleur.Rouge), carteJouee.Item2);
         }
     }
 }

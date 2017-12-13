@@ -9,5 +9,7 @@ namespace Uno
         Sens Sens { get; set; }
 
         Joueur JoueurDuTour { get; }
+
+        void TerminerTour();
     }
 }

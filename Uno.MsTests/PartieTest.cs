@@ -88,9 +88,12 @@ namespace Uno.MsTests
         public void UnJoueurPeutPiocherUneCarteLorsqueCestSonTour()
         {
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Trois, Couleur.Vert));
             piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
 
             partie.PiocherCarte(new Joueur("Joueur 1"));
+
+            Assert.AreEqual(1, partie.Joueurs[0].Main.Count); 
         }
 
         [TestMethod]
@@ -113,6 +116,7 @@ namespace Uno.MsTests
             });
 
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
 
             partie.PiocherCarte(new Joueur("Joueur 1"));
@@ -148,6 +152,26 @@ namespace Uno.MsTests
             pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 1"));
 
             Assert.ThrowsException<MauvaiseCouleurChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Noir));
+        }
+
+        [TestMethod]
+        public void LaCartePiocheeEstJoueeSiEllePeutLetre()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet( _=> _.DerniereCarte).Returns(new Carte(Valeur.Huit, Couleur.Bleu));
+            piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Rouge));
+
+            Tuple<string, Carte> carteJouee = null;
+            partie.CarteJouee += (joueur, carte) =>
+            {
+                carteJouee = new Tuple<string, Carte>(joueur.Nom, carte);
+            };
+
+            partie.PiocherCarte(new Joueur("Joueur 1"));
+
+            Assert.IsNotNull(carteJouee);
+            Assert.AreEqual("Joueur 1", carteJouee.Item1);
+            Assert.AreEqual(new Carte(Valeur.Huit, Couleur.Rouge), carteJouee.Item2);
         }
     }
 }

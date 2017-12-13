@@ -10,13 +10,13 @@ namespace Uno
     {
         private const int NB_MIN_JOUEURS_PARTIE = 2;
         private const int NB_CARTE_MAIN_INITIALE = 7;
-        private readonly ITalon pile;
+        private readonly ITalon talon;
         private readonly IPioche pioche;
         private readonly ITour tour;
 
-        public Partie(ITalon pile, IPioche pioche, ITour tour)
+        public Partie(ITalon talon, IPioche pioche, ITour tour)
         {
-            this.pile = pile;
+            this.talon = talon;
             this.pioche = pioche;
             this.tour = tour;
             this.PartieCommencee += PartieEstCommencee;
@@ -56,10 +56,10 @@ namespace Uno
 
         public void ChoisirCouleur(Joueur joueur, Couleur couleur)
         {
-            if (pile.CouleurJeu.HasValue || pile.JoueurChoixCouleur == null)
+            if (talon.CouleurJeu.HasValue || talon.JoueurChoixCouleur == null)
                 throw new CouleurDeJeuDejaChoisieException();
 
-            if (pile.JoueurChoixCouleur != null && pile.JoueurChoixCouleur.Nom != joueur.Nom)
+            if (talon.JoueurChoixCouleur != null && talon.JoueurChoixCouleur.Nom != joueur.Nom)
                 throw new MauvaisJoueurDeJouerException();
             
             if (couleur == Couleur.Noir)
@@ -89,7 +89,7 @@ namespace Uno
             if (joueurQuiJoue.Main.All(_ => _ != carte))
                 throw new JoueurNePossedePasLaCarteException();
 
-            var derniereCarte = pile.DerniereCarte;
+            var derniereCarte = talon.DerniereCarte;
             if (!carte.EstSuperJoker() && !carte.EstJoker() && derniereCarte.Couleur != carte.Couleur && derniereCarte.Valeur != carte.Valeur)
                 throw new MauvaiseCarteJoueeException();
 
@@ -114,8 +114,16 @@ namespace Uno
         {
             var carte = pioche.TirerCarte();
             var joueurDuTour = Joueurs.First(_ => _.Nom == joueur.Nom);
-
             joueurDuTour.TirerCarte(carte);
+
+            try
+            {
+                JouerCarte(joueur, carte);
+            }
+            catch(UnoException)
+            {
+                tour.TerminerTour();
+            }
         }
 
         private void DistribuerCartes()

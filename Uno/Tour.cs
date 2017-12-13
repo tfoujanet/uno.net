@@ -28,6 +28,11 @@ namespace Uno
             get { return joueurs[indexTourJoueur]; }
         }
 
+        public void TerminerTour()
+        {
+            IncrementerTour();
+        }
+
         private void CarteJouee(Joueur joueur, Carte carte)
         {
             if (carte.Valeur == Valeur.ChangementSens)
