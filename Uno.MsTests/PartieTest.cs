@@ -120,5 +120,34 @@ namespace Uno.MsTests
             CollectionAssert.Contains(partie.Joueurs[0].Main, new Carte(Valeur.Huit, Couleur.Jaune));
             Assert.AreEqual(4, partie.Joueurs[0].Main.Count);
         }
+
+        [TestMethod]
+        public void UnJoueurNePeutPasChoisirDeCouleurSiCeNestPasPossible()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet(_ => _.CouleurJeu).Returns(Couleur.Bleu);
+
+            Assert.ThrowsException<CouleurDeJeuDejaChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Rouge));
+        }
+
+        [TestMethod]
+        public void UnJoueurNePeutPasChoisirDeCouleurSilNaPasPoseDeCarteNoire()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 3"));
+            pileMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
+            pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 2"));
+
+            Assert.ThrowsException<MauvaisJoueurDeJouerException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Rouge));
+        }
+
+        [TestMethod]
+        public void LaCouleurNoireNePeutJamaisEtreChoisie()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 3"));
+            pileMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
+            pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 1"));
+
+            Assert.ThrowsException<MauvaiseCouleurChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Noir));
+        }
     }
 }

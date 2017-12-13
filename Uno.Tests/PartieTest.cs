@@ -23,7 +23,7 @@ namespace Uno.Tests
             partie.Joueurs.AddRange(new []
             {
                 new Joueur("Joueur 1"),
-                new Joueur("Joueur 2")
+                    new Joueur("Joueur 2")
             });
         }
 
@@ -49,13 +49,13 @@ namespace Uno.Tests
             partie.Joueurs[0].Main.AddRange(new []
             {
                 new Carte(Valeur.Deux, Couleur.Rouge),
-                new Carte(Valeur.ChangementSens, Couleur.Jaune),
-                new Carte(Valeur.Cinq, Couleur.Bleu)
+                    new Carte(Valeur.ChangementSens, Couleur.Jaune),
+                    new Carte(Valeur.Cinq, Couleur.Bleu)
             });
 
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
 
-            Assert.Throws<JoueurNePossedePasLaCarteException>(() => partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Zero, Couleur.Rouge)));            
+            Assert.Throws<JoueurNePossedePasLaCarteException>(() => partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Zero, Couleur.Rouge)));
         }
 
         [Fact]
@@ -64,8 +64,8 @@ namespace Uno.Tests
             partie.Joueurs[0].Main.AddRange(new []
             {
                 new Carte(Valeur.Deux, Couleur.Rouge),
-                new Carte(Valeur.ChangementSens, Couleur.Jaune),
-                new Carte(Valeur.Cinq, Couleur.Bleu)
+                    new Carte(Valeur.ChangementSens, Couleur.Jaune),
+                    new Carte(Valeur.Cinq, Couleur.Bleu)
             });
 
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
@@ -100,8 +100,8 @@ namespace Uno.Tests
             partie.Joueurs[0].Main.AddRange(new []
             {
                 new Carte(Valeur.Deux, Couleur.Rouge),
-                new Carte(Valeur.ChangementSens, Couleur.Jaune),
-                new Carte(Valeur.Cinq, Couleur.Bleu)
+                    new Carte(Valeur.ChangementSens, Couleur.Jaune),
+                    new Carte(Valeur.Cinq, Couleur.Bleu)
             });
 
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
@@ -111,6 +111,35 @@ namespace Uno.Tests
 
             Assert.Contains(new Carte(Valeur.Huit, Couleur.Jaune), partie.Joueurs[0].Main);
             Assert.Equal(4, partie.Joueurs[0].Main.Count);
+        }
+
+        [Fact]
+        public void UnJoueurNePeutPasChoisirDeCouleurSiCeNestPasPossible()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet(_ => _.CouleurJeu).Returns(Couleur.Bleu);
+
+            Assert.Throws<CouleurDeJeuDejaChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Rouge));
+        }
+
+        [Fact]
+        public void UnJoueurNePeutPasChoisirDeCouleurSilNaPasPoseDeCarteNoire()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 3"));
+            pileMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
+            pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 2"));
+
+            Assert.Throws<MauvaisJoueurDeJouerException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Rouge));
+        }
+
+        [Fact]
+        public void LaCouleurNoireNePeutJamaisEtreChoisie()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 3"));
+            pileMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
+            pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 1"));
+
+            Assert.Throws<MauvaiseCouleurChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Noir));
         }
     }
 }
