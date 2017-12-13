@@ -18,7 +18,7 @@ namespace Uno
 
         public Sens Sens { get; set; }
 
-        public Joueur JoueurDuTour 
+        public Joueur JoueurDuTour
         {
             get { return joueurs[indexTourJoueur]; }
         }
@@ -27,6 +27,17 @@ namespace Uno
         {
             if (carte.Valeur == Valeur.ChangementSens)
                 InverserSens();
+            
+            var listeValeursQuiPassentLeTour = new []
+            {
+                Valeur.PasseTour,
+                Valeur.Plus2,
+                Valeur.Plus4
+            };
+            if (listeValeursQuiPassentLeTour.Contains(carte.Valeur))
+                IncrementerTour();
+
+            IncrementerTour();
         }
 
         private void InitialiserJoueurs(IEnumerable<Joueur> listeJoueurs)
@@ -38,6 +49,13 @@ namespace Uno
         private void InverserSens()
         {
             Sens = Sens == Sens.Horaire ? Sens.Antihoraire : Sens.Horaire;
+        }
+
+        private void IncrementerTour()
+        {
+            indexTourJoueur = indexTourJoueur + 1 == joueurs.Count
+                ? 0
+                : indexTourJoueur + 1;            
         }
     }
 }
