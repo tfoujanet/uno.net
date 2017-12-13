@@ -21,12 +21,14 @@ namespace Uno
             this.tour = tour;
             this.PartieCommencee += PartieEstCommencee;
             this.CarteJouee += CarteJoueeParJoueur;
+            this.JoueurAPioche += JoueurATireUneCarte;
 
             Joueurs = new List<Joueur>();
         }
 
         public List<Joueur> Joueurs { get; }
 
+        public event Action<Joueur> JoueurAPioche;
         public event Action<Joueur, Carte> CarteJouee;
         public event Action<Joueur> JoueurAjoute;
         public event Action<IEnumerable<Joueur>> PartieCommencee;
@@ -49,6 +51,16 @@ namespace Uno
 
             if (PartieCommencee != null)
                 PartieCommencee(Joueurs);
+        }
+
+        public void PiocherCarte(Joueur joueur)
+        {
+            var joueurTour = tour.JoueurDuTour;
+            if (joueurTour.Nom != joueur.Nom)
+                throw new MauvaisJoueurDeJouerException();
+
+            if (JoueurAPioche != null)
+                JoueurAPioche(joueur);
         }
 
         public void JouerCarte(Joueur joueur, Carte carte)
@@ -80,6 +92,14 @@ namespace Uno
         {
             pioche.MelangerCartes();
             DistribuerCartes();
+        }
+
+        private void JoueurATireUneCarte(Joueur joueur)
+        {
+            var carte = pioche.TirerCarte();
+            var joueurDuTour = Joueurs.First(_ => _.Nom == joueur.Nom);
+
+            joueurDuTour.TirerCarte(carte);
         }
 
         private void DistribuerCartes()

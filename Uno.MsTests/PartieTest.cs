@@ -84,5 +84,42 @@ namespace Uno.MsTests
 
             CollectionAssert.DoesNotContain(partie.Joueurs[0].Main, new Carte(Valeur.Cinq, Couleur.Bleu));
         }
+
+        [TestMethod]
+        public void UnJoueurPeutPiocherUneCarteLorsqueCestSonTour()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
+
+            partie.PiocherCarte(new Joueur("Joueur 1"));
+        }
+
+        [TestMethod]
+        public void UnJoueurNePeutPasPiocherUneCarteLorsqueCeNestPasSonTour()
+        {
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
+
+            Assert.ThrowsException<MauvaisJoueurDeJouerException>(() => partie.PiocherCarte(new Joueur("Joueur 2")));
+        }
+
+        [TestMethod]
+        public void QuandUnJoueurPiocheUneCarteLaCarteVientDansSaMain()
+        {
+            partie.Joueurs[0].Main.AddRange(new []
+            {
+                new Carte(Valeur.Deux, Couleur.Rouge),
+                new Carte(Valeur.ChangementSens, Couleur.Jaune),
+                new Carte(Valeur.Cinq, Couleur.Bleu)
+            });
+
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
+
+            partie.PiocherCarte(new Joueur("Joueur 1"));
+
+            CollectionAssert.Contains(partie.Joueurs[0].Main, new Carte(Valeur.Huit, Couleur.Jaune));
+            Assert.AreEqual(4, partie.Joueurs[0].Main.Count);
+        }
     }
 }
