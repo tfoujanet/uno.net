@@ -57,5 +57,23 @@ namespace Uno.Tests
 
             Assert.Throws<JoueurNePossedePasLaCarteException>(() => partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Zero, Couleur.Rouge)));            
         }
+
+        [Fact]
+        public void UneCarteJoueeParUnJoueurNeDoitPlusEtreDansSaMain()
+        {
+            partie.Joueurs[0].Main.AddRange(new []
+            {
+                new Carte(Valeur.Deux, Couleur.Rouge),
+                new Carte(Valeur.ChangementSens, Couleur.Jaune),
+                new Carte(Valeur.Cinq, Couleur.Bleu)
+            });
+
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
+            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Cinq, Couleur.Rouge));
+
+            partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Cinq, Couleur.Bleu));
+
+            Assert.DoesNotContain(new Carte(Valeur.Cinq, Couleur.Bleu), partie.Joueurs[0].Main);
+        }
     }
 }

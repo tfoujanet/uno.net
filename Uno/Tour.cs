@@ -23,7 +23,7 @@ namespace Uno
             get { return joueurs[indexTourJoueur]; }
         }
 
-        private void CarteJouee(Carte carte)
+        private void CarteJouee(Joueur joueur, Carte carte)
         {
             if (carte.Valeur == Valeur.ChangementSens)
                 InverserSens();

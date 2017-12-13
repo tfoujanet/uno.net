@@ -16,7 +16,7 @@ namespace Uno
             get { return pile.Count > 0 ? pile[pile.Count - 1] : null; }
         }
 
-        private void CarteJouee(Carte carte)
+        private void CarteJouee(Joueur joueur, Carte carte)
         {
             pile.Add(carte);
         }

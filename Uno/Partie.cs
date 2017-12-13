@@ -20,13 +20,14 @@ namespace Uno
             this.pioche = pioche;
             this.tour = tour;
             this.PartieCommencee += PartieEstCommencee;
+            this.CarteJouee += CarteJoueeParJoueur;
 
             Joueurs = new List<Joueur>();
         }
 
         public List<Joueur> Joueurs { get; }
 
-        public event Action<Carte> CarteJouee;
+        public event Action<Joueur, Carte> CarteJouee;
         public event Action<Joueur> JoueurAjoute;
         public event Action<IEnumerable<Joueur>> PartieCommencee;
 
@@ -65,7 +66,14 @@ namespace Uno
                 throw new MauvaiseCarteJoueeException();
 
             if (CarteJouee != null)
-                CarteJouee(carte);
+                CarteJouee(joueur, carte);
+        }
+
+        private void CarteJoueeParJoueur(Joueur joueur, Carte carte)
+        {
+            var joueurDuTour = Joueurs.First(_ => _.Nom == joueur.Nom);
+            var carteJouee = joueurDuTour.Main.First(_ => _ == carte);
+            joueurDuTour.Main.Remove(carteJouee);
         }
 
         private void PartieEstCommencee(IEnumerable<Joueur> joueurs)

@@ -40,7 +40,7 @@ namespace Uno.MsTests
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
-            partie.CarteJouee += (carte) => {
+            partie.CarteJouee += (joueur, carte) => {
                 listeCarte.Add(carte);
             };      
 
@@ -55,7 +55,7 @@ namespace Uno.MsTests
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
-            partie.CarteJouee += (carte) => {
+            partie.CarteJouee += (joueur, carte) => {
                 listeCarte.Add(carte);
             };      
 
@@ -70,7 +70,7 @@ namespace Uno.MsTests
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
-            partie.CarteJouee += (carte) => {
+            partie.CarteJouee += (joueur, carte) => {
                 listeCarte.Add(carte);
             };      
 
@@ -85,7 +85,7 @@ namespace Uno.MsTests
             pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
-            partie.CarteJouee += (carte) => {
+            partie.CarteJouee += (joueur, carte) => {
                 listeCarte.Add(carte);
             };      
 

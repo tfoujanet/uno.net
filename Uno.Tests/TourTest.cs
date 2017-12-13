@@ -17,7 +17,7 @@ namespace Uno.Tests
         [Fact]
         public void QuandUneCarteChangementSensEstJoueeLeTourChangeDeSens()
         {
-            partieMock.Raise(partie => partie.CarteJouee -= null, new Carte(Valeur.ChangementSens, Couleur.Rouge));
+            partieMock.Raise(partie => partie.CarteJouee -= null, new Joueur("Joueur 1"), new Carte(Valeur.ChangementSens, Couleur.Rouge));
 
             Assert.Equal(Sens.Antihoraire, tour.Sens);
         }
