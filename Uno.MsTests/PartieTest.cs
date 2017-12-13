@@ -25,16 +25,16 @@ namespace Uno.MsTests
             tourMock = new Mock<ITour>();
 
             partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
+            partie.Joueurs.AddRange(new []
+            {
+                new Joueur("Joueur 1"),
+                new Joueur("Joueur 2")
+            });
         }
 
         [TestMethod]
         public void QuandLaPartieCommenceLesJoueursOntSeptCartes()
-        {
-            partie.Joueurs.AddRange(new []
-            {
-                new Joueur("Joueur 1"),
-                    new Joueur("Joueur 2")
-            });
+        {            
             partie.CommencerPartie();
 
             var joueur1 = partie.Joueurs[0];
@@ -47,11 +47,6 @@ namespace Uno.MsTests
         [TestMethod]
         public void UnJoueurNePeutPasJouerSiCeNestPasSonTour()
         {
-            partie.Joueurs.AddRange(new []
-            {
-                new Joueur("Joueur 1"),
-                    new Joueur("Joueur 2")
-            });
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
 
             Assert.ThrowsException<MauvaisJoueurDeJouerException>(() => partie.JouerCarte(new Joueur("Joueur 2"), new Carte(Valeur.Deux, Couleur.Jaune)));

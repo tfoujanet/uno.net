@@ -24,6 +24,13 @@ namespace Uno.MsTests
                 new Joueur("Joueur 1"),
                 new Joueur("Joueur 2")
             });
+            partie.Joueurs[0].Main.AddRange(new []
+            {
+                new Carte(Valeur.Quatre, Couleur.Rouge),
+                new Carte(Valeur.Deux, Couleur.Vert),
+                new Carte(Valeur.Joker, Couleur.Noir),
+                new Carte(Valeur.Plus4, Couleur.Noir)
+            });
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
         }
 

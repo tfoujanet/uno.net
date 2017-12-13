@@ -3,7 +3,7 @@ namespace Uno.Exceptions
     public class JoueurNePossedePasLaCarteException : UnoException
     {
         public JoueurNePossedePasLaCarteException()
-         : base("Ce n'est pas au tour de ce joueur")
+         : base("Le joueur ne possède pas la carte dans sa main")
          {}
     }
 }
