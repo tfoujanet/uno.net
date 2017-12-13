@@ -4,7 +4,7 @@ namespace Uno
 {
     public class Talon : ITalon
     {
-        private List<Carte> pile = new List<Carte>();
+        private List<Carte> talon = new List<Carte>();
 
         public Talon(IPartie partie)
         {
@@ -14,7 +14,7 @@ namespace Uno
 
         public Carte DerniereCarte
         {
-            get { return pile.Count > 0 ? pile[pile.Count - 1] : null; }
+            get { return talon.Count > 0 ? talon[talon.Count - 1] : null; }
         }
 
         public Couleur? CouleurJeu { get; private set; }
@@ -23,7 +23,7 @@ namespace Uno
 
         private void CarteJouee(Joueur joueur, Carte carte)
         {
-            pile.Add(carte);
+            talon.Add(carte);
             CouleurJeu = carte.Couleur != Couleur.Noir ?
                 carte.Couleur :
                 (Couleur?) null;

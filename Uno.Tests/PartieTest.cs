@@ -8,7 +8,7 @@ namespace Uno.Tests
 {
     public class PartieTest
     {
-        private Mock<ITalon> pileMock;
+        private Mock<ITalon> talonMock;
         private Mock<IPioche> piocheMock;
         private Mock<ITour> tourMock;
 
@@ -16,11 +16,11 @@ namespace Uno.Tests
 
         public PartieTest()
         {
-            pileMock = new Mock<ITalon>();
+            talonMock = new Mock<ITalon>();
             piocheMock = new Mock<IPioche>();
             tourMock = new Mock<ITour>();
 
-            partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
+            partie = new Partie(talonMock.Object, piocheMock.Object, tourMock.Object);
             partie.Joueurs.AddRange(new []
             {
                 new Joueur("Joueur 1"),
@@ -70,7 +70,7 @@ namespace Uno.Tests
             });
 
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Cinq, Couleur.Rouge));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Cinq, Couleur.Rouge));
 
             partie.JouerCarte(new Joueur("Joueur 1"), new Carte(Valeur.Cinq, Couleur.Bleu));
 
@@ -81,7 +81,7 @@ namespace Uno.Tests
         public void UnJoueurPeutPiocherUneCarteLorsqueCestSonTour()
         {
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Bleu));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Bleu));
             piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
 
             partie.PiocherCarte(new Joueur("Joueur 1"));
@@ -109,7 +109,7 @@ namespace Uno.Tests
             });
 
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Jaune));
 
             partie.PiocherCarte(new Joueur("Joueur 1"));
@@ -122,7 +122,7 @@ namespace Uno.Tests
         public void UnJoueurNePeutPasChoisirDeCouleurSiCeNestPasPossible()
         {
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
-            pileMock.SetupGet(_ => _.CouleurJeu).Returns(Couleur.Bleu);
+            talonMock.SetupGet(_ => _.CouleurJeu).Returns(Couleur.Bleu);
 
             Assert.Throws<CouleurDeJeuDejaChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Rouge));
         }
@@ -131,8 +131,8 @@ namespace Uno.Tests
         public void UnJoueurNePeutPasChoisirDeCouleurSilNaPasPoseDeCarteNoire()
         {
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 3"));
-            pileMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
-            pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 2"));
+            talonMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
+            talonMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 2"));
 
             Assert.Throws<MauvaisJoueurDeJouerException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Rouge));
         }
@@ -141,8 +141,8 @@ namespace Uno.Tests
         public void LaCouleurNoireNePeutJamaisEtreChoisie()
         {
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 3"));
-            pileMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
-            pileMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 1"));
+            talonMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
+            talonMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 1"));
 
             Assert.Throws<MauvaiseCouleurChoisieException>(() => partie.ChoisirCouleur(new Joueur("Joueur 1"), Couleur.Noir));
         }
@@ -151,7 +151,7 @@ namespace Uno.Tests
         public void LaCartePiocheeEstJoueeSiEllePeutLetre()
         {
             tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 1"));
-            pileMock.SetupGet( _=> _.DerniereCarte).Returns(new Carte(Valeur.Huit, Couleur.Bleu));
+            talonMock.SetupGet( _=> _.DerniereCarte).Returns(new Carte(Valeur.Huit, Couleur.Bleu));
             piocheMock.Setup(_ => _.TirerCarte()).Returns(new Carte(Valeur.Huit, Couleur.Rouge));
 
             Tuple<string, Carte> carteJouee = null;

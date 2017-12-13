@@ -7,7 +7,7 @@ namespace Uno.Tests
 {
     public class DebutPartieTest
     {
-        private Mock<ITalon> pileMock;
+        private Mock<ITalon> talonMock;
         private Mock<IPioche> piocheMock;
         private Mock<ITour> tourMock;
 
@@ -15,11 +15,11 @@ namespace Uno.Tests
 
         public DebutPartieTest()
         {
-            pileMock = new Mock<ITalon>();
+            talonMock = new Mock<ITalon>();
             piocheMock = new Mock<IPioche>();
             tourMock = new Mock<ITour>();
 
-            partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
+            partie = new Partie(talonMock.Object, piocheMock.Object, tourMock.Object);
         }
 
         [Fact]

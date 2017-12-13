@@ -6,7 +6,7 @@ namespace Uno.Tests
 {
     public class ValeursCarteTest
     {
-        private Mock<ITalon> pileMock;
+        private Mock<ITalon> talonMock;
         private Mock<IPioche> piocheMock;
         private Mock<ITour> tourMock;
 
@@ -14,11 +14,11 @@ namespace Uno.Tests
 
         public ValeursCarteTest()
         {
-            pileMock = new Mock<ITalon>();
+            talonMock = new Mock<ITalon>();
             piocheMock = new Mock<IPioche>();
             tourMock = new Mock<ITour>();
 
-            partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
+            partie = new Partie(talonMock.Object, piocheMock.Object, tourMock.Object);
             partie.Joueurs.AddRange(new []
             {
                 new Joueur("Joueur 1"),
@@ -37,7 +37,7 @@ namespace Uno.Tests
         [Fact]
         public void OnPeutJouerUneCarteDeMemeCouleur()
         {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
             partie.CarteJouee += (joueur, carte) =>
@@ -53,7 +53,7 @@ namespace Uno.Tests
         [Fact]
         public void OnPeutJouerUneCarteDeMemeNumero()
         {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
             partie.CarteJouee += (joueur, carte) =>
@@ -69,7 +69,7 @@ namespace Uno.Tests
         [Fact]
         public void OnPeutJouerUneCarteJokerSurNimporteQuelleCouleur()
         {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
             partie.CarteJouee += (joueur, carte) =>
@@ -85,7 +85,7 @@ namespace Uno.Tests
         [Fact]
         public void OnPeutJouerUneCarteSuperJokerSurNimporteQuelleCouleur()
         {
-            pileMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Deux, Couleur.Rouge));
             var listeCarte = new List<Carte>();
 
             partie.CarteJouee += (joueur, carte) =>

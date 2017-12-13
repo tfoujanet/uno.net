@@ -7,12 +7,12 @@ namespace Uno.MsTests
     public class TalonTest
     {
         private readonly Mock<IPartie> partieMock;
-        private readonly Talon pile;
+        private readonly Talon talon;
 
         public TalonTest()
         {
             partieMock = new Mock<IPartie>();
-            pile = new Talon(partieMock.Object);
+            talon = new Talon(partieMock.Object);
         }
 
         [TestMethod]
@@ -20,8 +20,8 @@ namespace Uno.MsTests
         {
             partieMock.Raise(partie => partie.CarteJouee -= null, new Joueur("Joueur 1"), new Carte(Valeur.Deux, Couleur.Rouge));
 
-            Assert.AreEqual(Couleur.Rouge, pile.CouleurJeu);
-            Assert.IsNull(pile.JoueurChoixCouleur);
+            Assert.AreEqual(Couleur.Rouge, talon.CouleurJeu);
+            Assert.IsNull(talon.JoueurChoixCouleur);
         }
 
         [TestMethod]
@@ -29,9 +29,9 @@ namespace Uno.MsTests
         {
             partieMock.Raise(partie => partie.CarteJouee -= null, new Joueur("Joueur 1"), new Carte(Valeur.Joker, Couleur.Noir));
 
-            Assert.IsNull(pile.CouleurJeu);
-            Assert.IsNotNull(pile.JoueurChoixCouleur);
-            Assert.AreEqual("Joueur 1", pile.JoueurChoixCouleur.Nom);
+            Assert.IsNull(talon.CouleurJeu);
+            Assert.IsNotNull(talon.JoueurChoixCouleur);
+            Assert.AreEqual("Joueur 1", talon.JoueurChoixCouleur.Nom);
         }
     }
 }

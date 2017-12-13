@@ -8,18 +8,18 @@ namespace Uno.MsTests
     [TestClass]
     public class JoueursTests
     {
-        private Mock<ITalon> pileMock;
+        private Mock<ITalon> talonMock;
         private Mock<IPioche> piocheMock;
         private Mock<ITour> tourMock;
         private readonly Partie partie;
 
         public JoueursTests()
         {
-            pileMock = new Mock<ITalon>();
+            talonMock = new Mock<ITalon>();
             piocheMock = new Mock<IPioche>();
             tourMock = new Mock<ITour>();
 
-            partie = new Partie(pileMock.Object, piocheMock.Object, tourMock.Object);
+            partie = new Partie(talonMock.Object, piocheMock.Object, tourMock.Object);
         }
 
         [TestMethod]
