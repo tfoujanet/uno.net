@@ -6,7 +6,7 @@ namespace Uno.Tests
 {
     public class ValeursCarteTest
     {
-        private Mock<IPile> pileMock;
+        private Mock<ITalon> pileMock;
         private Mock<IPioche> piocheMock;
         private Mock<ITour> tourMock;
 
@@ -14,7 +14,7 @@ namespace Uno.Tests
 
         public ValeursCarteTest()
         {
-            pileMock = new Mock<IPile>();
+            pileMock = new Mock<ITalon>();
             piocheMock = new Mock<IPioche>();
             tourMock = new Mock<ITour>();
 

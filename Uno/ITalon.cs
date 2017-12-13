@@ -1,6 +1,6 @@
 namespace Uno
 {
-    public interface IPile
+    public interface ITalon
     {
         Carte DerniereCarte { get; }
 

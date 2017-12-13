@@ -10,11 +10,11 @@ namespace Uno
     {
         private const int NB_MIN_JOUEURS_PARTIE = 2;
         private const int NB_CARTE_MAIN_INITIALE = 7;
-        private readonly IPile pile;
+        private readonly ITalon pile;
         private readonly IPioche pioche;
         private readonly ITour tour;
 
-        public Partie(IPile pile, IPioche pioche, ITour tour)
+        public Partie(ITalon pile, IPioche pioche, ITour tour)
         {
             this.pile = pile;
             this.pioche = pioche;

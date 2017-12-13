@@ -3,15 +3,15 @@ using Xunit;
 
 namespace Uno.Tests
 {
-    public class PileTest
+    public class TalonTest
     {
         private readonly Mock<IPartie> partieMock;
-        private readonly Pile pile;
+        private readonly Talon pile;
 
-        public PileTest()
+        public TalonTest()
         {
             partieMock = new Mock<IPartie>();
-            pile = new Pile(partieMock.Object);
+            pile = new Talon(partieMock.Object);
         }
 
         [Fact]

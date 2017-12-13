@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace Uno
 {
-    public class Pile : IPile
+    public class Talon : ITalon
     {
         private List<Carte> pile = new List<Carte>();
 
-        public Pile(IPartie partie)
+        public Talon(IPartie partie)
         {
             partie.CarteJouee += CarteJouee;
             partie.CouleurChoisie += CouleurChoisie;
