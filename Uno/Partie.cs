@@ -32,6 +32,7 @@ namespace Uno
         public event Action<Joueur, Carte> CarteJouee;
         public event Action<Joueur> JoueurAjoute;
         public event Action<IEnumerable<Joueur>> PartieCommencee;
+        public event Action<Couleur> CouleurChoisie;
 
         public void AjouterJoueur(Joueur joueur)
         {
@@ -51,6 +52,21 @@ namespace Uno
 
             if (PartieCommencee != null)
                 PartieCommencee(Joueurs);
+        }
+
+        public void ChoisirCouleur(Joueur joueur, Couleur couleur)
+        {
+            if (pile.CouleurJeu.HasValue || pile.JoueurChoixCouleur == null)
+                throw new CouleurDeJeuDejaChoisieException();
+
+            if (pile.JoueurChoixCouleur != null && pile.JoueurChoixCouleur.Nom != joueur.Nom)
+                throw new MauvaisJoueurDeJouerException();
+            
+            if (couleur == Couleur.Noir)
+                throw new MauvaiseCouleurChoisieException();
+
+            if (CouleurChoisie != null)
+                CouleurChoisie(couleur);
         }
 
         public void PiocherCarte(Joueur joueur)

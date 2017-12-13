@@ -9,7 +9,6 @@ using Uno.Helpers;
 
 namespace Uno.MsTests
 {
-
     [TestClass]
     public class PartieTest
     {

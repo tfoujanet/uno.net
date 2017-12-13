@@ -9,5 +9,6 @@ namespace Uno
         event Action<Joueur, Carte> CarteJouee;
         event Action<Joueur> JoueurAjoute;
         event Action<IEnumerable<Joueur>> PartieCommencee;
+        event Action<Couleur> CouleurChoisie;
     }
 }
