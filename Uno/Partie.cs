@@ -90,7 +90,13 @@ namespace Uno
                 throw new JoueurNePossedePasLaCarteException();
 
             var derniereCarte = talon.DerniereCarte;
-            if (!carte.EstSuperJoker() && !carte.EstJoker() && derniereCarte.Couleur != carte.Couleur && derniereCarte.Valeur != carte.Valeur)
+            if (!derniereCarte.EstNoire() && !carte.EstSuperJoker() && !carte.EstJoker() && derniereCarte.Couleur != carte.Couleur && derniereCarte.Valeur != carte.Valeur)
+                throw new MauvaiseCarteJoueeException();
+            
+            if (derniereCarte.EstNoire() && !talon.CouleurJeu.HasValue)
+                throw new CouleurDeJeuPasEncoreChoisieException();
+
+            if (derniereCarte.EstNoire() && talon.CouleurJeu.HasValue && carte.Couleur != talon.CouleurJeu)
                 throw new MauvaiseCarteJoueeException();
 
             if (CarteJouee != null)

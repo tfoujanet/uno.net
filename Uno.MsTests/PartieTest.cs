@@ -173,5 +173,60 @@ namespace Uno.MsTests
             Assert.AreEqual("Joueur 1", carteJouee.Item1);
             Assert.AreEqual(new Carte(Valeur.Huit, Couleur.Rouge), carteJouee.Item2);
         }
+
+        [TestMethod]
+        public void UnJoueurNePeutPasJouerSiLaCouleurNaPasEteChoisie()
+        {
+            partie.Joueurs[1].Main.Add(new Carte(Valeur.Neuf, Couleur.Bleu));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Joker, Couleur.Noir));
+            talonMock.SetupGet(_ => _.CouleurJeu).Returns((Couleur?)null);
+            talonMock.SetupGet(_ => _.JoueurChoixCouleur).Returns(new Joueur("Joueur 1"));
+
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 2"));
+
+            Assert.ThrowsException<CouleurDeJeuPasEncoreChoisieException>(() => partie.JouerCarte(new Joueur("Joueur 2"), new Carte(Valeur.Neuf, Couleur.Bleu)));
+        }
+
+        [TestMethod]
+        public void UnJoueurPeutJouerDeLaBonneCouleurChoisie()
+        {
+            partie.Joueurs[1].Main.Add(new Carte(Valeur.Neuf, Couleur.Bleu));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Joker, Couleur.Noir));
+            talonMock.SetupGet(_ => _.CouleurJeu).Returns(Couleur.Bleu);
+            talonMock.SetupGet(_ => _.JoueurChoixCouleur).Returns((Joueur)null);
+
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 2"));
+
+            Tuple<string, Carte> carteJouee = null;
+            partie.CarteJouee += (joueur, carte) =>
+            {
+                carteJouee = new Tuple<string, Carte>(joueur.Nom, carte);
+            };
+
+            partie.JouerCarte(new Joueur("Joueur 2"), new Carte(Valeur.Neuf, Couleur.Bleu));
+
+            Assert.IsNotNull(carteJouee);
+            Assert.AreEqual("Joueur 2", carteJouee.Item1);
+            Assert.AreEqual(new Carte(Valeur.Neuf, Couleur.Bleu), carteJouee.Item2);
+        }
+
+        [TestMethod]
+        public void QuandUneCouleurEstChoisieLeJoueurNePeutPasJouerUneAutreCouleur()
+        {
+            partie.Joueurs[1].Main.Add(new Carte(Valeur.Neuf, Couleur.Jaune));
+            talonMock.SetupGet(_ => _.DerniereCarte).Returns(new Carte(Valeur.Joker, Couleur.Noir));
+            talonMock.SetupGet(_ => _.CouleurJeu).Returns(Couleur.Bleu);
+            talonMock.SetupGet(_ => _.JoueurChoixCouleur).Returns((Joueur)null);
+
+            tourMock.SetupGet(_ => _.JoueurDuTour).Returns(new Joueur("Joueur 2"));
+
+            Tuple<string, Carte> carteJouee = null;
+            partie.CarteJouee += (joueur, carte) =>
+            {
+                carteJouee = new Tuple<string, Carte>(joueur.Nom, carte);
+            };
+
+            Assert.ThrowsException<MauvaiseCarteJoueeException>(() => partie.JouerCarte(new Joueur("Joueur 2"), new Carte(Valeur.Neuf, Couleur.Jaune)));
+        }
     }
 }

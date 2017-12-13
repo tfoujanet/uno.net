@@ -11,5 +11,10 @@ namespace Uno.Extensions
         {
             return carte.Valeur == Valeur.Plus4 && carte.Couleur == Couleur.Noir;
         }
+
+        public static bool EstNoire(this Carte carte)
+        {
+            return carte.EstJoker() || carte.EstSuperJoker();
+        }
     }
 }
