@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,8 +6,12 @@ namespace Uno
 {
     public class Tour : ITour
     {
+        private const int NB_CARTE_A_PIOCHE_PLUS_2 = 2;
+        private const int NB_CARTE_A_PIOCHE_PLUS_4 = 4;
         private List<Joueur> joueurs;
         private int indexTourJoueur = 0;
+
+        public event Action<Joueur, int> JoueurDoitPiocher;
 
         public Tour(IPartie partie)
         {
@@ -27,7 +32,7 @@ namespace Uno
         {
             if (carte.Valeur == Valeur.ChangementSens)
                 InverserSens();
-            
+
             var listeValeursQuiPassentLeTour = new []
             {
                 Valeur.PasseTour,
@@ -35,7 +40,10 @@ namespace Uno
                 Valeur.Plus4
             };
             if (listeValeursQuiPassentLeTour.Contains(carte.Valeur))
+            {
                 IncrementerTour();
+                FairePiocherJoueur(carte.Valeur);
+            }
 
             IncrementerTour();
         }
@@ -51,11 +59,20 @@ namespace Uno
             Sens = Sens == Sens.Horaire ? Sens.Antihoraire : Sens.Horaire;
         }
 
+        private void FairePiocherJoueur(Valeur valeurCarte)
+        {
+            if (JoueurDoitPiocher != null && (valeurCarte == Valeur.Plus2 || valeurCarte == Valeur.Plus4))
+            {
+                var nbCarteAPiocher = valeurCarte == Valeur.Plus2 ? NB_CARTE_A_PIOCHE_PLUS_2 : NB_CARTE_A_PIOCHE_PLUS_4;
+                JoueurDoitPiocher(JoueurDuTour, nbCarteAPiocher);
+            }
+        }
+
         private void IncrementerTour()
         {
-            indexTourJoueur = indexTourJoueur + 1 == joueurs.Count
-                ? 0
-                : indexTourJoueur + 1;            
+            indexTourJoueur = indexTourJoueur + 1 == joueurs.Count ?
+                0 :
+                indexTourJoueur + 1;
         }
     }
 }

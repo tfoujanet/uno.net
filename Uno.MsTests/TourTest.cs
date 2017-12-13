@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -62,6 +63,38 @@ namespace Uno.MsTests
             partieMock.Raise(partie => partie.CarteJouee -= null, new Joueur("Joueur 1"), new Carte(Valeur.Plus4, Couleur.Rouge));
 
             Assert.AreEqual("Joueur 3", tour.JoueurDuTour.Nom);
+        }
+
+        [TestMethod]
+        public void QuandUneCartePlusQuatreEstJoueeLeJoueurSuivantDoitPiocherQuatreCartes()
+        {
+            Tuple<string, int> piochePourJoueur = null;
+            tour.JoueurDoitPiocher += (joueur, nombre) => 
+            {
+                piochePourJoueur = new Tuple<string, int>(joueur.Nom, nombre);
+            };
+
+            partieMock.Raise(partie => partie.CarteJouee -= null, new Joueur("Joueur 1"), new Carte(Valeur.Plus4, Couleur.Noir));
+
+            Assert.IsNotNull(piochePourJoueur);
+            Assert.AreEqual("Joueur 2", piochePourJoueur.Item1);
+            Assert.AreEqual(4, piochePourJoueur.Item2);
+        }
+
+        [TestMethod]
+        public void QuandUneCartePlusDeuxEstJoueeLeJoueurSuivantDoitPiocherDeuxCartes()
+        {
+            Tuple<string, int> piochePourJoueur = null;
+            tour.JoueurDoitPiocher += (joueur, nombre) => 
+            {
+                piochePourJoueur = new Tuple<string, int>(joueur.Nom, nombre);
+            };
+
+            partieMock.Raise(partie => partie.CarteJouee -= null, new Joueur("Joueur 1"), new Carte(Valeur.Plus2, Couleur.Rouge));
+
+            Assert.IsNotNull(piochePourJoueur);
+            Assert.AreEqual("Joueur 2", piochePourJoueur.Item1);
+            Assert.AreEqual(2, piochePourJoueur.Item2);
         }
     }
 }
