@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Uno.ValueObjects;
 
-namespace Uno
+namespace Uno.ValueObjects
 {
     public class Joueur
     {
