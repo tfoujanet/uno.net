@@ -4,6 +4,7 @@ using System.Linq;
 using Uno.Exceptions;
 using Uno.Extensions;
 using Uno.Interfaces;
+using Uno.ValueObjects;
 
 namespace Uno
 {

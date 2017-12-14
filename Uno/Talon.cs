@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Uno.Interfaces;
+using Uno.ValueObjects;
 
 namespace Uno
 {

@@ -1,3 +1,5 @@
+using Uno.ValueObjects;
+
 namespace Uno.Interfaces
 {
     public interface ITalon
