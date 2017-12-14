@@ -1,7 +1,7 @@
 using System;
 using Uno.ValueObjects;
 
-namespace Uno
+namespace Uno.ValueObjects
 {
     public class Carte
     {
