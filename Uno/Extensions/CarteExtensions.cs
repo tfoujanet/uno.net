@@ -1,3 +1,5 @@
+using Uno.ValueObjects;
+
 namespace Uno.Extensions
 {
     public static class CarteExtensions

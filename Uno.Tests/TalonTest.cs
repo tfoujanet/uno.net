@@ -1,6 +1,7 @@
 using Moq;
 using Xunit;
 using Uno.Interfaces;
+using Uno.ValueObjects;
 
 namespace Uno.Tests
 {

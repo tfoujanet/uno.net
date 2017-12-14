@@ -3,6 +3,7 @@ using System.Linq;
 using Uno;
 using Uno.Helpers;
 using Uno.Interfaces;
+using Uno.ValueObjects;
 using Xunit;
 
 namespace Uno.Tests

@@ -1,4 +1,4 @@
-namespace Uno
+namespace Uno.ValueObjects
 {
     public enum Valeur
     {

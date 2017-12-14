@@ -7,6 +7,7 @@ using Uno;
 using Uno.Exceptions;
 using Uno.Helpers;
 using Uno.Interfaces;
+using Uno.ValueObjects;
 
 namespace Uno.MsTests
 {

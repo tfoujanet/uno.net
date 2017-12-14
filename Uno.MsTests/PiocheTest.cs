@@ -4,6 +4,7 @@ using Uno;
 using Uno.Helpers;
 using Uno.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Uno.ValueObjects;
 
 namespace Uno.MsTests
 {

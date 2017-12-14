@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Uno.Interfaces;
+using Uno.ValueObjects;
 
 namespace Uno.MsTests
 {
