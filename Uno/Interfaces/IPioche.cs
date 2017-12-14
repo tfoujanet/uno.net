@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Uno
+namespace Uno.Interfaces
 {
     public interface IPioche
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Moq;
 using Xunit;
+using Uno.Interfaces;
 
 namespace Uno.Tests
 {

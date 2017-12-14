@@ -6,6 +6,7 @@ using Moq;
 using Uno;
 using Uno.Exceptions;
 using Uno.Helpers;
+using Uno.Interfaces;
 
 namespace Uno.MsTests
 {

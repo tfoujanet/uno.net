@@ -1,6 +1,6 @@
 using System;
 
-namespace Uno
+namespace Uno.Interfaces
 {
     public interface ITour
     {

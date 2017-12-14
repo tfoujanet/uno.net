@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Moq;
 using Uno.Exceptions;
+using Uno.Interfaces;
 using Xunit;
 
 namespace Uno.Tests

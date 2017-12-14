@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Uno.Exceptions;
+using Uno.Interfaces;
 
 namespace Uno.MsTests
 {

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Uno;
 using Uno.Helpers;
+using Uno.Interfaces;
 using Xunit;
 
 namespace Uno.Tests

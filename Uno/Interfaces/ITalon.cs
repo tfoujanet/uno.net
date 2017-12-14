@@ -1,4 +1,4 @@
-namespace Uno
+namespace Uno.Interfaces
 {
     public interface ITalon
     {
