@@ -17,7 +17,7 @@ namespace Uno.Api.Streams
 
         public IObservable<Carte> StreamTalon()
         {
-            return Observable.Create(async (IObserver<Carte> observer) => {            
+            return Observable.Create((IObserver<Carte> observer) => {            
                 talon.CartePosee += carte => 
                 {
                     observer.OnNext(carte);
