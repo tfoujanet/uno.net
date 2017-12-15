@@ -8,7 +8,7 @@ using Uno.ValueObjects;
 namespace Uno
 {
 
-    public class Pioche : IPioche
+    public class Pioche
     {
         private const int NB_CARTES_JOKERS = 4;
         private const int NB_CARTE_COULEUR = 2;
@@ -31,18 +31,6 @@ namespace Uno
             {
                 AjouterCartes(couleur);
             }
-        }
-
-        public void MelangerCartes()
-        {
-            listeCartes = listeCartes.Randomize().ToList();
-        }
-
-        public Carte TirerCarte()
-        {
-            var carte = listeCartes.First();
-            listeCartes.Remove(carte);
-            return carte;
         }
 
         private void AjouterCartes(Couleur couleur)
