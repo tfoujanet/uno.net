@@ -21,7 +21,6 @@ namespace Uno
             this.talon = talon;
             this.pioche = pioche;
             this.tour = tour;
-            this.PartieCommencee += PartieEstCommencee;
             this.CarteJouee += CarteJoueeParJoueur;
             this.JoueurAPioche += JoueurATireUneCarte;
 
@@ -52,6 +51,9 @@ namespace Uno
             if (Joueurs.Count < NB_MIN_JOUEURS_PARTIE)
                 throw new PasAssezDeJoueurException();
 
+            pioche.MelangerCartes();
+            DistribuerCartes();
+
             if (PartieCommencee != null)
                 PartieCommencee(Joueurs);
         }
@@ -63,7 +65,7 @@ namespace Uno
 
             if (talon.JoueurChoixCouleur != null && talon.JoueurChoixCouleur.Nom != joueur.Nom)
                 throw new MauvaisJoueurDeJouerException();
-            
+
             if (couleur == Couleur.Noir)
                 throw new MauvaiseCouleurChoisieException();
 
@@ -94,7 +96,7 @@ namespace Uno
             var derniereCarte = talon.DerniereCarte;
             if (!derniereCarte.EstNoire() && !carte.EstSuperJoker() && !carte.EstJoker() && derniereCarte.Couleur != carte.Couleur && derniereCarte.Valeur != carte.Valeur)
                 throw new MauvaiseCarteJoueeException();
-            
+
             if (derniereCarte.EstNoire() && !talon.CouleurJeu.HasValue)
                 throw new CouleurDeJeuPasEncoreChoisieException();
 
@@ -112,12 +114,6 @@ namespace Uno
             joueurDuTour.Main.Remove(carteJouee);
         }
 
-        private void PartieEstCommencee(IEnumerable<Joueur> joueurs)
-        {
-            pioche.MelangerCartes();
-            DistribuerCartes();
-        }
-
         private void JoueurATireUneCarte(Joueur joueur)
         {
             var carte = pioche.TirerCarte();
@@ -128,7 +124,7 @@ namespace Uno
             {
                 JouerCarte(joueur, carte);
             }
-            catch(UnoException)
+            catch (UnoException)
             {
                 tour.TerminerTour();
             }
@@ -136,9 +132,9 @@ namespace Uno
 
         private void DistribuerCartes()
         {
-            for (var i=0; i<Joueurs.Count; i++)
+            for (var i = 0; i < Joueurs.Count; i++)
             {
-                for (var j=0; j< NB_CARTE_MAIN_INITIALE; j++)
+                for (var j = 0; j < NB_CARTE_MAIN_INITIALE; j++)
                 {
                     var carte = pioche.TirerCarte();
                     Joueurs[i].TirerCarte(carte);
