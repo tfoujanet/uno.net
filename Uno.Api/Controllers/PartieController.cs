@@ -1,8 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Uno.Api.Hubs;
 using Uno.Api.Repository;
 using Uno.Interfaces;
+using Uno.ValueObjects;
 
 namespace Uno.Api.Controllers
 {
@@ -30,24 +34,41 @@ namespace Uno.Api.Controllers
         }
 
         [HttpPost("Rejoindre")]
-        public IActionResult RejoindrePartie(Utilisateur user)
+        public IActionResult RejoindrePartie(string user)
         {
             partie.JoueurAjoute += async(joueur) =>
             {
-                if (joueur.Nom == user.Nom)
+                if (joueur.Nom == user)
                 {
-                    repository.AjouterUtilisateur(user);
-                    await context.Clients.Client(user.Id).InvokeAsync("partieRejointe", partie.Joueurs.Count);
+                    await context.Clients.All.InvokeAsync("utilisateurAjoute", user);
                 }
             };
-            partie.AjouterJoueur(new ValueObjects.Joueur(user.Nom));
+            partie.AjouterJoueur(new Joueur(user));
             return Ok();
         }
 
         [HttpPost("Commencer")]
         public IActionResult CommencerPartie()
         {
+            partie.PartieCommencee += (joueurs) =>
+            {
+                var listeMains = InitialiserMains(joueurs);
+                var envoiTaches = listeMains.Select(_ => new Task(async() =>
+                {
+                    await context.Clients.Client(_.Key).InvokeAsync("partieInitialisee", _.Value);
+                })).ToArray();
+                Task.WaitAll(envoiTaches);
+            };
+            partie.CommencerPartie();
             return Ok();
+        }
+
+        private IDictionary<string, List<Carte>> InitialiserMains(IEnumerable<Joueur> joueurs)
+        {
+            var mainsJoueurs = from joueur in joueurs
+            let connexionJoueur = repository.GetUtilisateurIdByName(joueur.Nom)
+            select new { Key = connexionJoueur, Main = joueur.Main };
+            return mainsJoueurs.ToDictionary(_ => _.Key, _ => _.Main);
         }
     }
 }

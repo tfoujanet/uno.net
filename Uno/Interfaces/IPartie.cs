@@ -14,5 +14,6 @@ namespace Uno.Interfaces
         event Action<Couleur> CouleurChoisie;
 
         void AjouterJoueur(Joueur joueur);
+        void CommencerPartie();
     }
 }

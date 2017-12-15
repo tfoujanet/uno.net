@@ -1,19 +1,21 @@
 using Moq;
-using Xunit;
 using Uno.Interfaces;
 using Uno.ValueObjects;
+using Xunit;
 
 namespace Uno.Tests
 {
     public class TalonTest
     {
         private readonly Mock<IPartie> partieMock;
+        private readonly Mock<IPioche> piocheMock;
         private readonly Talon talon;
 
         public TalonTest()
         {
             partieMock = new Mock<IPartie>();
-            talon = new Talon(partieMock.Object);
+            piocheMock = new Mock<IPioche>();
+            talon = new Talon(partieMock.Object, piocheMock.Object);
         }
 
         [Fact]

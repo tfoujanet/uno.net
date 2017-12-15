@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Uno.Api.Hubs;
 using Uno.Api.Repository;
+using Uno.Api.Streams;
 
 namespace Uno.Api
 {
@@ -29,6 +30,7 @@ namespace Uno.Api
             services.AddSignalR();
             services.AddUno();
             services.AddSingleton<IUserRepository, MemoryUserRepository>();
+            services.AddSingleton(typeof(TalonStream));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
