@@ -21,7 +21,6 @@ namespace Uno
             this.talon = talon;
             this.pioche = pioche;
             this.tour = tour;
-            this.PartieCommencee += PartieEstCommencee;
             this.CarteJouee += CarteJoueeParJoueur;
             this.JoueurAPioche += JoueurATireUneCarte;
 
@@ -51,6 +50,9 @@ namespace Uno
         {
             if (Joueurs.Count < NB_MIN_JOUEURS_PARTIE)
                 throw new PasAssezDeJoueurException();
+
+            pioche.MelangerCartes();
+            DistribuerCartes();
 
             if (PartieCommencee != null)
                 PartieCommencee(Joueurs);
@@ -110,12 +112,6 @@ namespace Uno
             var joueurDuTour = Joueurs.First(_ => _.Nom == joueur.Nom);
             var carteJouee = joueurDuTour.Main.First(_ => _ == carte);
             joueurDuTour.Main.Remove(carteJouee);
-        }
-
-        private void PartieEstCommencee(IEnumerable<Joueur> joueurs)
-        {
-            pioche.MelangerCartes();
-            DistribuerCartes();
         }
 
         private void JoueurATireUneCarte(Joueur joueur)

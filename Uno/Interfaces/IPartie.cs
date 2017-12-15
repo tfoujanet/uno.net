@@ -6,10 +6,13 @@ namespace Uno.Interfaces
 {
     public interface IPartie
     {
-        List<Joueur> Joueurs { get; }        
+        List<Joueur> Joueurs { get; }
+             
         event Action<Joueur, Carte> CarteJouee;
         event Action<Joueur> JoueurAjoute;
         event Action<IEnumerable<Joueur>> PartieCommencee;
         event Action<Couleur> CouleurChoisie;
+
+        void AjouterJoueur(Joueur joueur);
     }
 }
