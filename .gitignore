@@ -1,5 +1,7 @@
 Uno/bin/
 Uno/obj/
+Uno.Api/bin/
+Uno.Api/obj/
 Uno.Tests/bin/
 Uno.Tests/obj/
 Uno.MsTests/bin/

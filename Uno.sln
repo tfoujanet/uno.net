@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uno.Tests", "Uno.Tests\Uno.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uno.MsTests", "Uno.MsTests\Uno.MsTests.csproj", "{EB0EB263-BCF7-432B-BE97-3BC8AA32D19C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uno.Api", "Uno.Api\Uno.Api.csproj", "{A31133D0-514A-40F7-A83D-6ED0C1082EBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{EB0EB263-BCF7-432B-BE97-3BC8AA32D19C}.Release|x64.Build.0 = Release|x64
 		{EB0EB263-BCF7-432B-BE97-3BC8AA32D19C}.Release|x86.ActiveCfg = Release|x86
 		{EB0EB263-BCF7-432B-BE97-3BC8AA32D19C}.Release|x86.Build.0 = Release|x86
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Debug|x64.ActiveCfg = Debug|x64
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Debug|x64.Build.0 = Debug|x64
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Debug|x86.ActiveCfg = Debug|x86
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Debug|x86.Build.0 = Debug|x86
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Release|x64.ActiveCfg = Release|x64
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Release|x64.Build.0 = Release|x64
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Release|x86.ActiveCfg = Release|x86
+		{A31133D0-514A-40F7-A83D-6ED0C1082EBB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
